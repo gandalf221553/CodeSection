@@ -1,0 +1,391 @@
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            path: '.'
+            #show_hidden: True
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Chiudi Finestra"
+                on_release: app.dismiss_popup()
+            Button:
+                text: "Apri"
+                on_release: app.load(filechooser.path, filechooser.selection)
+
+<SaveDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            path: '.'
+            on_selection: nomArch = self.selection and self.selection[0] or ''
+
+        #TextInput:
+            #id: text_input
+            #size_hint_y: None
+            #height: 30
+            #multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Chiudi Finestra"
+                on_release: app.dismiss_popup()
+
+            Button:
+                text: "Salva"
+                on_release: app.save(filechooser.path, self)
+
+<MatplotFigure>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            points: 96, 0, 197, 97, 110, 69, 52, 127
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            texture: self._img_texture
+        Color:
+            rgba: 1, 0, 0, 0.5
+        BorderImage:
+            source: 'border.png'
+            pos: self._box_pos
+            size: self._box_size
+            border: 1, 1, 1, 1
+
+<MatplotNavToolbar>:
+    orientation: 'vertical'
+    home_btn: home_btn
+    pan_btn: pan_btn
+    zoom_btn: zoom_btn
+    info_lbl: info_lbl
+    Label:
+        id: info_lbl
+        
+
+        size_hint: 1, 0.4
+    BoxLayout:
+        size_hint: 1, 0.6
+        Button:
+            id: home_btn
+            text: "Home"
+
+        ToggleButton:
+            id: pan_btn
+            text: "Pan"
+            group: "toolbar_btn"
+        ToggleButton:
+            id: zoom_btn
+            text: "Zoom"
+            group: "toolbar_btn"
+
+
+<LblTxt@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    theTxt: iAmTxt
+    Label:
+        text: root.lblTxtIn
+        size_hint_x: 0.3
+    TextInput:
+        size_hint_x: 0.7
+        write_tab:False
+        #input_filter: "float"
+        id: iAmTxt
+        text: ''
+        
+<COordinate@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    theTxt: iAmTxt
+    Label:
+        text: root.lblTxtIn
+        size_hint_x: 0.3
+    TextInput:
+        size_hint_x: 0.7
+        write_tab:False
+        #input_filter: lambda text, from_undo: text[:5 - len(self.text)]
+        id: iAmTxt
+        text: ''
+<CheckLista@BoxLayout>:
+    orientation: 'horizontal'
+    lblTxtIn: 'default'
+    Label:
+        text: root.lblTxtIn
+        size_hint_x: 0.7
+    CheckBox:
+        size_hint_x: 0.3
+        #on_active: ""
+        #on_active: on_checkbox_active
+
+
+<MyLayout@BoxLayout>:
+    orientation: 'horizontal'
+    padding: "10dp"
+    BoxLayout:
+        orientation: "horizontal"
+        #size_hint_y: 500
+        BoxLayout:
+            size_hint: 0.35,1
+            #size_hint_x: 500
+            BoxLayout:
+                #size_hint: 1, 1
+                orientation: 'horizontal'
+                #BoxLayout:
+                    #orientation: 'horizontal'
+                    #Label:
+                        #size_hint: 1, 0.5
+                        #halign: 'center'
+                        #valign: 'middle'
+                        #text: "Benvenuto\nSoftware di calcolo Ingegneristico\ndella geometria delle aree"
+                    #BoxLayout:
+                        #size_hint: 1, 0.5
+                        #orientation: 'vertical'
+                        #Label:
+                            #text: 'Disegna Figura:'
+                        #CheckBox:
+                            
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    BoxLayout:
+                        size_hint: 1,0.05
+                        Button: 
+                            text: 'Cerchio'
+                            on_press: _screen_manager.current = 'screen1'
+                        Button:
+                            text: 'Arco'
+                            on_press: _screen_manager.current = 'screen2'
+                        Button:
+                            text: 'Polilinea'
+                            on_press: _screen_manager.current = 'screen3'
+                        Button:
+                            text: 'Asta'
+                            on_press: _screen_manager.current = 'screen4'
+                    ScreenManager:
+                        id: _screen_manager
+                        Screen:
+                            name: 'screen1'
+                            BoxLayout:
+                                #size_hint: 1,0.32
+                                orientation: 'vertical'
+                                Label: 
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    text: "Cerchio"
+                                COordinate:   
+                                    id: peso
+                                    lblTxtIn: "Peso Spec."
+                                LblTxt:
+                                    id: centrx
+                                    lblTxtIn: "Centro X"
+                                LblTxt:   
+                                    id: centry
+                                    lblTxtIn: 'Centro Y'
+                                LblTxt:   
+                                    id: raggi
+                                    lblTxtIn: 'Raggio'
+                                Button:
+                                    text: "aggiungi figura"
+                                    on_release: app.CreaSalvataggio(self,1,peso.theTxt.text,centrx.theTxt.text,centry.theTxt.text, raggi.theTxt.text)
+                        Screen:
+                            name: 'screen2'
+                            BoxLayout:
+                                #size_hint: 1,0.42
+                                orientation: 'vertical'
+                                Label: 
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    text: "Arco"
+                                COordinate:   
+                                    id: pesot
+                                    lblTxtIn: "Peso Spec."
+                                LblTxt:
+                                    id: centrox
+                                    lblTxtIn: "Centro X"
+                                LblTxt:   
+                                    id: centroy
+                                    lblTxtIn: 'Centro Y'
+                                LblTxt:   
+                                    id: raggio
+                                    lblTxtIn: 'Raggio'
+                                LblTxt:   
+                                    id: angi
+                                    lblTxtIn: 'Ang. Iniz. 360'
+                                    #text: '{}'.format(angi.value)
+                                #Slider:
+                                    #id: angi
+                                    #min: -360.
+                                    #max: 360.
+                                    #value: 0
+                                LblTxt:   
+                                    id: angf
+                                    lblTxtIn: 'Ang. Fin. 360'
+                                    #text: '{}'.format(angf.value)
+                                #Slider:
+                                    #id: angf
+                                    #min: -360.
+                                    #max: 360.
+                                    #value: 360
+                                Button:
+                                    text: "aggiungi figura"
+                                    on_release: app.CreaSalvataggio(self,2,pesot.theTxt.text,centrox.theTxt.text, centroy.theTxt.text,raggio.theTxt.text,angi.theTxt.text,angf.theTxt.text)
+                        Screen:
+                            name: 'screen3'
+                            BoxLayout:
+                                #size_hint: 1,0.26
+                                orientation: 'vertical'
+                                Label: 
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    text: "Polilinea"
+                                COordinate:   
+                                    id: pesospec
+                                    lblTxtIn: "Peso Spec."
+                                LblTxt:
+                                    input_filter: None
+                                    id: numero
+                                    lblTxtIn: "quante coordinate:"
+                                COordinate:
+                                    input_filter: None
+                                    id: coord
+                                    lblTxtIn: "X1,Y1,X2,Y2,X3,Y3 ecc."
+                                Button:
+                                    text: "aggiungi"
+                                    on_release: app.CreaSalvataggio(self,numero.theTxt.text,pesospec.theTxt.text,coord.theTxt.text)
+                        Screen:
+                            name: 'screen4'
+                            BoxLayout:
+                                #size_hint: 1,0.26
+                                orientation: 'vertical'
+                                Label: 
+                                    halign: 'center'
+                                    valign: 'middle'
+                                    text: "Asta\n(solo verticali o orizzontali)"
+                                COordinate:   
+                                    id: pesot
+                                    lblTxtIn: "Peso Spec."
+                                LblTxt:
+                                    id: ptxisp
+                                    lblTxtIn: "Xi"
+                                LblTxt:   
+                                    id: ptyisp
+                                    lblTxtIn: 'Yi'
+                                LblTxt:   
+                                    id: ptxfsp
+                                    lblTxtIn: 'Xf'
+                                LblTxt:   
+                                    id: ptyfsp
+                                    lblTxtIn: 'Yf'
+                                LblTxt:   
+                                    id: spessore
+                                    lblTxtIn: 'spessore'
+                                Button:
+                                    text: "aggiungi figura"
+                                    on_release: app.CreaSalvataggio(self,2.5,pesot.theTxt.text,ptxisp.theTxt.text,ptyisp.theTxt.text,ptxfsp.theTxt.text,ptyfsp.theTxt.text,spessore.theTxt.text)
+                    TextInput:
+                        size_hint: 1, 1
+                        write_tab:False
+                        text: ""
+                        id: risoluzione
+        BoxLayout:
+            orientation: 'vertical'
+            BoxLayout:
+                size_hint: 1,0.3
+                orientation: 'horizontal'
+                BoxLayout:
+                    orientation: 'vertical'
+                    COordinate:   
+                        id: nomArch
+                        lblTxtIn: 'Nome:'
+                        text: ""
+                    #CheckLista:
+                        #id: vuoidisegnare
+                        #lblTxtIn: "Disegnare?"
+                        #active: app.on_checkbox_active
+                    CheckLista:
+                        id: vuoifareilnocciolo
+                        lblTxtIn: "Nocciolo?"
+                        #on_active: app.BottonePremutoNocciolo()
+                    LblTxt:   
+                        id: quantidiscreti
+                        lblTxtIn: "Quanti punti"
+                        #iAmTxt: ""
+                #BoxLayout:
+                    #orientation: 'vertical'
+                    #TextInput:
+                        #size_hint: 1, 1
+                        #write_tab:False
+                        #text: ""
+                        #id: schifo
+                    BoxLayout:
+                        orientation: 'vertical'
+                        BoxLayout:
+                            #size_hint_y: None
+                            #height: 30
+                            Button:
+                                text: 'Carica File'
+                                on_release: app.show_load()
+                            Button:
+                                text: 'SALVA'
+                                on_release: app.salvaauto()
+                            Button:
+                                text: 'Salva Come:'
+                                on_release: app.show_save()
+                BoxLayout:
+                    orientation: 'vertical'
+                    Button: 
+                        text: 'Cercami su Facebook'
+                        on_release: app.Internet()
+                    Button: 
+                        id: resetta
+                        size_hint: 1, 1
+                        text: 'Resetta'
+                        font_size: 18
+                        height: '32dp'
+                        on_release: app.Resetta(app.stringa)
+                    Button:
+                        text: "UNDO"
+                        on_release: app.UndoZZZZ(self)
+                    Button:
+                        text: "Salva Disegno"
+                        on_release: app.SalvaDisegno(self)
+                    Button: 
+                        id: ciccia
+                        size_hint: 1, 1
+                        text: 'CALCOLA'
+                        background_color: (1.0, 0.0, 0.0, 1.0)
+                        #font_size: 18
+                        #height: '32dp'
+                        on_release: app.Calcolalo(app.stringa)
+                BoxLayout:
+                    Button:
+                        text: "bee"
+                    Button:
+                        text: "be1"
+                    
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: 1, 1
+                BoxLayout:
+                    orientation: 'vertical'
+                    MatplotFigure:
+                        id: figure_wgt
+                        size_hint: 1, 0.85
+                    #MatplotNavToolbar:
+                        #id: navbar_wgt
+                        #size_hint: 1, 0.15
+                        #figure_widget: figure_wgt
+
+MyLayout
+
+

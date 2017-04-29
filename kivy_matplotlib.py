@@ -531,12 +531,12 @@ if __name__ == '__main__':
                 #print("10000",val)
                 #stringa=stringa+args[1]+" "+args[2]+" "+args[3]+" "+args[4]+";"
             if args[1]==2:
-                val2=0. if args[2]=="" else str(args[2])
-                val3=0. if args[3]=="" else str(args[3])
-                val4=0. if args[4]=="" else str(args[4])
-                val5=0. if args[5]=="" else str(args[5])
-                val6=0. if args[6]=="" else str(args[6])
-                val7=0. if args[7]=="" else str(args[7])
+                val2=0. if args[2]=="" else float(args[2])
+                val3=0. if args[3]=="" else float(args[3])
+                val4=0. if args[4]=="" else float(args[4])
+                val5=0. if args[5]=="" else float(args[5])
+                val6=0. if args[6]=="" else float(args[6])
+                val7=0. if args[7]=="" else float(args[7])
                 if val2+val3+val4+val5+val6+val7!=0:
                     self.vada=self.vada+1
                     #val="2 "+val2+" 0 "+val3+" "+val4+" "+val5+" "+val6+" "+val7
